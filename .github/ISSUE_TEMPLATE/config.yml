@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security issue
+    url: https://github.com/hayrullah-zafer-yilmaz/layer-lens-audit/security/advisories/new
+    about: Please report security issues privately.

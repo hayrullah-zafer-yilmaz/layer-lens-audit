@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>layer-lens-audit: find the divs your interface doesn't need</title>
+    <meta
+      name="description"
+      content="layer-lens-audit checks any web page for wrappers that draw nothing and change nothing, empty elements and DOM that is too deep or too big, then shows them on the page and in 3D."
+    />
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./demo.css" />
+  </head>
+  <body>
+    <div class="topbar">
+      <span class="brand">layer-lens-audit</span>
+      <div class="lang" role="group" aria-label="Language" data-i18n-attr="aria-label:language">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="tr" aria-pressed="false">TR</button>
+      </div>
+    </div>
+
+    <header class="hero">
+      <h1 data-i18n="hero.title">Find the divs your interface doesn't need.</h1>
+      <p class="lede" data-i18n="hero.lede">
+        layer-lens-audit checks the page in your browser. It finds wrappers that draw nothing and change nothing, empty
+        elements, and DOM that is too deep or too big, then shows them on the page and in 3D. React, Vue, Svelte,
+        Angular or plain HTML: it reads what the browser rendered.
+      </p>
+      <div class="hero-actions">
+        <button id="audit" class="button primary" type="button" data-i18n="hero.audit">Audit the sample page</button>
+        <code class="install">npm install -D layer-lens-audit</code>
+      </div>
+    </header>
+
+    <main>
+      <section class="stage" aria-labelledby="sample-title">
+        <div class="stage-head">
+          <h2 id="sample-title" data-i18n="stage.title">A shop, built the usual way</h2>
+          <p data-i18n-html="stage.text">
+            Components wrap components, and every wrapper adds a div. Some of them hold the layout together; many do
+            nothing at all. The panel lists the ones that do nothing. Hover one to see it on the page, click it to see
+            why it can go and what to do, press <b>3D</b> to see the tower it builds.
+          </p>
+        </div>
+
+        <div id="shop" class="shop">
+          <div class="shop-layout">
+            <header class="shop-header">
+              <div class="logo-slot">
+                <div class="logo-box"><a class="logo" href="#shop">Northwind</a></div>
+              </div>
+              <nav class="shop-nav" aria-label="Shop sections" data-i18n-attr="aria-label:nav.label">
+                <a href="#shop" data-i18n="nav.new">New in</a>
+                <a href="#shop" data-i18n="nav.lighting">Lighting</a>
+                <a href="#shop" data-i18n="nav.furniture">Furniture</a>
+                <a href="#shop" data-i18n="nav.sale">Sale</a>
+              </nav>
+              <div class="header-actions">
+                <div class="search-wrap">
+                  <input
+                    class="search"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search the shop"
+                    data-i18n-attr="placeholder:search.placeholder;aria-label:search.label"
+                  />
+                </div>
+                <div class="cart-slot">
+                  <div class="cart-inner"><button class="cart" type="button" data-i18n="cart">Cart · 2</button></div>
+                </div>
+              </div>
+            </header>
+
+            <div class="shop-body">
+              <aside class="filters" aria-label="Filters" data-i18n-attr="aria-label:filters.label">
+                <div class="filter-group">
+                  <div class="filter-title-wrap"><h3 class="filter-title" data-i18n="filter.category">Category</h3></div>
+                  <ul class="filter-list">
+                    <li><label data-i18n="filter.lamps"><input type="checkbox" checked /> Lamps</label></li>
+                    <li><label data-i18n="filter.chairs"><input type="checkbox" /> Chairs</label></li>
+                    <li><label data-i18n="filter.tables"><input type="checkbox" /> Tables</label></li>
+                  </ul>
+                </div>
+                <div class="filter-group">
+                  <div class="filter-title-wrap"><h3 class="filter-title" data-i18n="filter.price">Price</h3></div>
+                  <ul class="filter-list">
+                    <li><label data-i18n="filter.under"><input type="checkbox" /> Under $50</label></li>
+                    <li><label data-i18n="filter.between"><input type="checkbox" /> $50 to $150</label></li>
+                  </ul>
+                </div>
+                <div class="muted"><p class="filter-note" data-i18n="filter.note">Prices include VAT.</p></div>
+              </aside>
+
+              <div class="products">
+                <div class="products-head">
+                  <div class="count-wrap"><p class="count" data-i18n="count">6 products</p></div>
+                  <div class="sort-wrap">
+                    <select class="sort" aria-label="Sort products" data-i18n-attr="aria-label:sort.label">
+                      <option data-i18n="sort.popular">Popular</option>
+                      <option data-i18n="sort.newest">Newest</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="product-grid" id="product-grid"></div>
+              </div>
+            </div>
+
+            <footer class="shop-footer">
+              <div class="footer-inner"><p data-i18n="shop.footer">Free delivery on orders over $50.</p></div>
+              <div class="clearfix"></div>
+            </footer>
+          </div>
+        </div>
+      </section>
+
+      <section class="rules" aria-labelledby="rules-title">
+        <h2 id="rules-title" data-i18n="rules.title">How it decides</h2>
+        <p class="section-lede" data-i18n="rules.lede">An element is only reported when all of these hold. Anything in doubt stays.</p>
+        <div class="rule-grid">
+          <article class="rule">
+            <h3 data-i18n="rule1.title">It draws nothing</h3>
+            <p data-i18n-html="rule1.text">No background, border, shadow, outline or <code>::before</code>, no effect such as clipping, positioning or a transform.</p>
+          </article>
+          <article class="rule">
+            <h3 data-i18n="rule2.title">It styles nothing inside it</h3>
+            <p data-i18n-html="rule2.text">No colour or font for its children, no custom properties, no <code>.card &gt; .title</code> rule that goes through it.</p>
+          </article>
+          <article class="rule">
+            <h3 data-i18n="rule3.title">Nothing moves without it</h3>
+            <p data-i18n-html="rule3.text">Its box is taken away for a moment and everything around it is measured again. Half a pixel of difference is enough to keep it.</p>
+          </article>
+          <article class="rule">
+            <h3 data-i18n="rule4.title">Nothing else needs it</h3>
+            <p data-i18n-html="rule4.text">No role, aria, handler or ref, no <code>:hover</code>, dark mode or <code>@media</code> styles. Ids and test ids are flagged to check.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="usage" aria-labelledby="usage-title">
+        <h2 id="usage-title" data-i18n="usage.title">Use it on any project</h2>
+        <div class="usage-grid">
+          <article class="usage-card">
+            <h3 data-i18n="usage1.title">In your app, while you develop</h3>
+            <p data-i18n-html="usage1.text">One line in your Vite config, then press <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd> on any page. Builds don't include it.</p>
+            <pre><code>// vite.config.js
+import { layerLensAudit } from 'layer-lens-audit/vite';
+
+export default { plugins: [layerLensAudit()] };</code></pre>
+          </article>
+          <article class="usage-card">
+            <h3 data-i18n="usage2.title">On any page, without installing</h3>
+            <p data-i18n="usage2.text">Drag this to your bookmarks bar, then click it on a page you want to audit.</p>
+            <p>
+              <a
+                class="bookmarklet"
+                href="javascript:(()=>{if(window.LayerLensAudit)return LayerLensAudit.inspect();const s=document.createElement('script');s.src='https://unpkg.com/layer-lens-audit';s.onload=()=>LayerLensAudit.inspect();document.head.append(s)})()"
+                >layer-lens-audit</a
+              >
+            </p>
+            <p class="small" data-i18n="usage2.small">Sites with a strict Content Security Policy block it.</p>
+          </article>
+          <article class="usage-card">
+            <h3 data-i18n="usage3.title">On the command line and in CI</h3>
+            <p data-i18n="usage3.text">Measures the page on a phone and a desktop, and fails the build when new wrappers pile up.</p>
+            <pre><code>npm install -D layer-lens-audit
+
+npx layer-lens-audit http://localhost:4173 \
+  --baseline layer-lens-audit.json --max 0</code></pre>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <a href="https://github.com/hayrullah-zafer-yilmaz/layer-lens-audit">GitHub</a>
+      <span data-i18n="footer.license">MIT licensed</span>
+    </footer>
+
+    <template id="product">
+      <div class="product-cell">
+        <article class="product-card" data-testid="product-card">
+          <div class="product-media"><div class="product-image"></div></div>
+          <div class="product-info">
+            <div class="product-title-row">
+              <div class="product-title-wrap"><h4 class="product-title"></h4></div>
+            </div>
+            <div class="price-row" data-testid="price"><span class="price"></span></div>
+            <div class="clearfix"></div>
+            <div class="product-actions">
+              <button class="btn primary" type="button" data-i18n="product.add">Add to cart</button>
+              <button class="btn" type="button" aria-label="Save for later" data-i18n-attr="aria-label:product.save">♡</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </template>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

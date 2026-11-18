@@ -1,0 +1,36 @@
+name: It flagged an element that is needed
+description: layer-lens-audit says an element can go, but removing it changes or breaks something.
+labels: [false positive]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you: these reports are how layer-lens-audit gets more accurate. You can write in English or Turkish (Türkçe de yazabilirsiniz).
+  - type: textarea
+    id: html
+    attributes:
+      label: The element and what is around it
+      description: The smallest HTML that shows it, with the CSS that applies. A link to a public page works too.
+      render: html
+    validations:
+      required: true
+  - type: textarea
+    id: finding
+    attributes:
+      label: What layer-lens-audit reported
+      description: The finding from "Copy as JSON" or `--format json`.
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why the element is needed
+      description: What changes or breaks without it, and at which screen size or state.
+    validations:
+      required: true
+  - type: input
+    id: setup
+    attributes:
+      label: Browser, framework and layer-lens-audit version
+      placeholder: Chrome 140, React 19, layer-lens-audit 0.1.0

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>layer-lens-audit cases</title>
+    <style>
+      body { margin: 0; font: 16px/1.5 system-ui, sans-serif; }
+      .case { margin: 16px; }
+      .row { display: flex; gap: 12px; }
+      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .card { padding: 12px; border: 1px solid #ccd; background: #fff; }
+      .padded { padding: 8px; }
+      .tinted { color: rgb(200, 0, 0); }
+      .hovery:hover { background: #eef; }
+      @media (min-width: 5000px) { .wide-only { display: flex; gap: 20px; } }
+      .through > .item { margin-left: 10px; }
+      .positioned { position: relative; }
+      .clipper { overflow: hidden; }
+      .spacer { height: 24px; }
+      .chip::before { content: '•'; }
+      .group:hover .arrow { translate: 4px 0; }
+      .cell-pad { padding: 4px; }
+      .dark .dark-text { color: white; }
+      .panel.is-open { padding: 10px; }
+      .stack > * + * { margin-top: 8px; }
+      .fading { transition: opacity 0.2s; }
+      .hide-small { display: none; }
+      @media (min-width: 900px) { .hide-small { display: inline; } }
+      :is(.kids > *) { margin-left: 6px; }
+      .card-row:has(.badge) { outline: 1px solid #99a; }
+      .placed-grid { display: grid; grid-template-columns: 1fr 1fr; }
+      .placed { grid-column-start: 2; }
+    </style>
+  </head>
+  <body>
+    <section class="case" id="chain">
+      <div class="expect-flag">
+        <div class="expect-flag">
+          <p>Two wrappers around a paragraph.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="case" id="flex">
+      <div class="row">
+        <div class="expect-flag"><div class="card">Card A</div></div>
+        <div class="card">Card B</div>
+      </div>
+    </section>
+
+    <section class="case" id="grid">
+      <div class="grid">
+        <div class="expect-flag"><div class="card">One</div></div>
+        <div class="expect-flag"><div class="card">Two</div></div>
+        <div class="expect-flag"><div class="card">Three</div></div>
+      </div>
+    </section>
+
+    <section class="case" id="needed">
+      <div class="padded expect-keep"><p>Padding moves this paragraph.</p></div>
+      <div class="tinted expect-keep"><p>The wrapper sets the colour.</p></div>
+      <div class="hovery expect-keep"><p>The wrapper has a hover background.</p></div>
+      <div class="wide-only expect-keep"><p>Styled on very wide screens.</p></div>
+      <div class="through expect-keep"><div class="item">Styled through the wrapper.</div></div>
+      <div class="positioned expect-keep"><p>Positioned wrapper.</p></div>
+      <div class="clipper expect-keep"><p>Clipping wrapper.</p></div>
+      <div role="group" class="expect-keep"><p>A wrapper with a role.</p></div>
+      <div class="expect-keep" style="--indent: 10px"><p style="margin-left: var(--indent)">Uses its custom property.</p></div>
+      <div class="group expect-keep"><span class="arrow">Group hover arrow</span></div>
+    </section>
+
+    <section class="case" id="jobs">
+      <div class="expect-keep" id="react-click"><p>A React onClick handler.</p></div>
+      <div class="expect-keep" id="react-ref"><p>A React ref.</p></div>
+      <div class="expect-keep" id="vue-listener"><p>A Vue event listener.</p></div>
+      <div class="dark-text expect-keep"><p>Styled in dark mode.</p></div>
+      <div class="panel expect-keep"><p>Styled when open.</p></div>
+      <div class="stack">
+        <p>First in the stack.</p>
+        <div class="expect-keep"><p>Unwrapping me would change the spacing between siblings.</p></div>
+      </div>
+      <div class="fading expect-keep"><p>Animates its changes.</p></div>
+      <p>Visible on wide screens: <span class="hide-small expect-keep">wide only</span></p>
+      <div class="kids expect-keep"><p>Its children are styled through :is().</p></div>
+      <div class="card-row expect-keep"><span class="badge expect-keep">A badge a :has() rule looks for</span></div>
+      <div class="placed-grid"><div class="placed expect-keep"><p>Placed in the second column.</p></div></div>
+    </section>
+
+    <section class="case" id="hooks">
+      <div data-testid="box" class="expect-flag expect-medium"><p>A wrapper tests may select.</p></div>
+      <div id="wrapper-one" class="expect-flag expect-medium"><p>A wrapper with an id.</p></div>
+    </section>
+
+    <section class="case" id="empty">
+      <p>Before the empty element.</p>
+      <div class="expect-flag expect-medium"></div>
+      <div class="spacer expect-keep"></div>
+      <span class="chip expect-keep"></span>
+      <p>After the empty element.</p>
+    </section>
+
+    <section class="case" id="inline">
+      <p>Hello <span class="expect-flag">world</span>, again.</p>
+    </section>
+
+    <section class="case" id="hidden">
+      <div style="display: none">
+        <div class="expect-keep"><p>Not rendered, so not measured.</p></div>
+      </div>
+    </section>
+
+    <section class="case" id="mount">
+      <div class="expect-keep" id="vue-root"><p>The app is mounted here.</p></div>
+    </section>
+
+    <section class="case" id="source">
+      <div class="cell-pad">
+        <div class="expect-flag from-vue"><p>Rendered by a Vue component.</p></div>
+      </div>
+    </section>
+
+    <script>
+      document.getElementById('react-click').__reactProps$test = { onClick() {} };
+      document.getElementById('react-ref').__reactFiber$test = { ref: { current: null } };
+      document.getElementById('vue-listener')._vei = { onClick() {} };
+      document.getElementById('vue-root').__vue_app__ = {};
+      const fromVue = document.querySelector('.from-vue');
+      fromVue.__vueParentComponent = { type: { __name: 'ProductCard', __file: '/src/components/ProductCard.vue' } };
+    </script>
+  </body>
+</html>
