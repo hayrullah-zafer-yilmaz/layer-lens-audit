@@ -1,5 +1,5 @@
 import { inspect, installInspector, type Inspector } from 'layer-lens-audit';
-import { applyLanguage, initialLanguage, PRODUCT_NAMES, type Lang } from './i18n';
+import { applyLanguage, initialLanguage, PRODUCT_NAMES, setText, TEXT, type Lang } from './i18n';
 
 const products = [
   { price: '$49', tone: 'linear-gradient(135deg, #dbeafe, #93c5fd)' },
@@ -20,11 +20,54 @@ for (const product of products) {
 }
 
 const shop = document.querySelector<HTMLElement>('#shop')!;
+const copyStatus = document.querySelector<HTMLElement>('#copy-status')!;
+const copyTimers = new Map<HTMLButtonElement, number>();
 let lang: Lang = initialLanguage();
 let inspector: Inspector | null = null;
 let uninstall: () => void = () => {};
 
+function labelCopyButton(button: HTMLButtonElement, key: 'copy' | 'copied') {
+  const label = TEXT[lang][key] ?? '';
+  if (button.dataset.i18n) setText(button, label);
+  if (button.hasAttribute('aria-label')) button.setAttribute('aria-label', label);
+  if (button.hasAttribute('title')) button.title = label;
+}
+
+function resetCopyButtons() {
+  for (const [button, timer] of copyTimers) {
+    window.clearTimeout(timer);
+    delete button.dataset.copied;
+  }
+  copyTimers.clear();
+  copyStatus.textContent = '';
+}
+
+async function copy(button: HTMLButtonElement) {
+  const source = document.querySelector<HTMLElement>(button.dataset.copy!);
+  if (!source) return;
+  try {
+    await navigator.clipboard.writeText(source.textContent!.trim());
+  } catch {
+    getSelection()?.selectAllChildren(source);
+    return;
+  }
+  window.clearTimeout(copyTimers.get(button));
+  button.dataset.copied = '';
+  labelCopyButton(button, 'copied');
+  copyStatus.textContent = TEXT[lang].copied ?? '';
+  copyTimers.set(
+    button,
+    window.setTimeout(() => {
+      copyTimers.delete(button);
+      delete button.dataset.copied;
+      labelCopyButton(button, 'copy');
+      copyStatus.textContent = '';
+    }, 1600)
+  );
+}
+
 function render() {
+  resetCopyButtons();
   applyLanguage(lang);
   grid.querySelectorAll<HTMLElement>('.product-title').forEach((title, index) => {
     title.textContent = PRODUCT_NAMES[lang][index] ?? '';
@@ -48,7 +91,12 @@ function setLanguage(next: Lang) {
 render();
 uninstall = installInspector({ root: shop, locale: lang });
 
-document.querySelector('#audit')!.addEventListener('click', audit);
+for (const button of document.querySelectorAll<HTMLButtonElement>('[data-audit]')) {
+  button.addEventListener('click', audit);
+}
+for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
+  button.addEventListener('click', () => copy(button));
+}
 for (const button of document.querySelectorAll<HTMLButtonElement>('[data-lang]')) {
   button.addEventListener('click', () => setLanguage(button.dataset.lang as Lang));
 }

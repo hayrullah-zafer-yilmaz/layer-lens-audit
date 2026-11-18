@@ -8,109 +8,167 @@
       name="description"
       content="layer-lens-audit checks any web page for wrappers that draw nothing and change nothing, empty elements and DOM that is too deep or too big, then shows them on the page and in 3D."
     />
-    <link rel="icon" href="data:," />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231d4ed8'/%3E%3Cg fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m16 7 9 4.5-9 4.5-9-4.5z'/%3E%3Cpath d='m7 16 9 4.5 9-4.5'/%3E%3Cpath d='m7 20.5 9 4.5 9-4.5'/%3E%3C/g%3E%3C/svg%3E"
+    />
     <link rel="stylesheet" href="./demo.css" />
   </head>
   <body>
-    <div class="topbar">
-      <span class="brand">layer-lens-audit</span>
+    <header class="site-header">
+      <a class="brand" href="#top">
+        <svg class="brand-mark icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m12 3 9 4.5-9 4.5-9-4.5z" />
+          <path d="m3 12 9 4.5 9-4.5" />
+          <path d="m3 16.5 9 4.5 9-4.5" />
+        </svg>
+        layer-lens-audit
+      </a>
+      <nav class="site-nav" aria-label="Project links" data-i18n-attr="aria-label:links.label">
+        <a href="https://www.npmjs.com/package/layer-lens-audit">npm</a>
+        <a href="https://github.com/hayrullah-zafer-yilmaz/layer-lens-audit">
+          <svg class="icon-solid" viewBox="0 0 16 16" aria-hidden="true">
+            <path
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"
+            />
+          </svg>
+          GitHub
+        </a>
+      </nav>
       <div class="lang" role="group" aria-label="Language" data-i18n-attr="aria-label:language">
         <button type="button" data-lang="en" aria-pressed="true">EN</button>
         <button type="button" data-lang="tr" aria-pressed="false">TR</button>
       </div>
-    </div>
-
-    <header class="hero">
-      <h1 data-i18n="hero.title">Find the divs your interface doesn't need.</h1>
-      <p class="lede" data-i18n="hero.lede">
-        layer-lens-audit checks the page in your browser. It finds wrappers that draw nothing and change nothing, empty
-        elements, and DOM that is too deep or too big, then shows them on the page and in 3D. React, Vue, Svelte,
-        Angular or plain HTML: it reads what the browser rendered.
-      </p>
-      <div class="hero-actions">
-        <button id="audit" class="button primary" type="button" data-i18n="hero.audit">Audit the sample page</button>
-        <code class="install">npm install -D layer-lens-audit</code>
-      </div>
     </header>
 
     <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <p class="eyebrow" data-i18n="hero.eyebrow">Open source DOM audit</p>
+        <h1 id="hero-title" data-i18n="hero.title">Find the divs your interface doesn't need.</h1>
+        <p class="lede" data-i18n="hero.lede">
+          layer-lens-audit checks the page in your browser. It finds wrappers that draw nothing and change nothing, empty
+          elements, and DOM that is too deep or too big, then shows them on the page and in 3D. React, Vue, Svelte,
+          Angular or plain HTML: it reads what the browser rendered.
+        </p>
+        <div class="hero-actions">
+          <button class="button primary" type="button" data-audit data-i18n="hero.audit">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2M8 12h8" />
+            </svg>
+            Audit the sample page
+          </button>
+          <div class="install">
+            <code id="install-command">npm install -D layer-lens-audit</code>
+            <button
+              class="install-copy"
+              type="button"
+              data-copy="#install-command"
+              aria-label="Copy"
+              title="Copy"
+              data-i18n-attr="aria-label:copy;title:copy"
+            >
+              <svg class="icon icon-copy" viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="9" y="9" width="12" height="12" rx="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+              <svg class="icon icon-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
       <section class="stage" aria-labelledby="sample-title">
         <div class="stage-head">
-          <h2 id="sample-title" data-i18n="stage.title">A shop, built the usual way</h2>
-          <p data-i18n-html="stage.text">
-            Components wrap components, and every wrapper adds a div. Some of them hold the layout together; many do
-            nothing at all. The panel lists the ones that do nothing. Hover one to see it on the page, click it to see
-            why it can go and what to do, press <b>3D</b> to see the tower it builds.
-          </p>
+          <div class="stage-intro">
+            <h2 id="sample-title" data-i18n="stage.title">A shop, built the usual way</h2>
+            <p data-i18n-html="stage.text">
+              Components wrap components, and every wrapper adds a div. Some of them hold the layout together; many do
+              nothing at all. The panel lists the ones that do nothing. Hover one to see it on the page, click it to see
+              why it can go and what to do, press <b>3D</b> to see the tower it builds.
+            </p>
+          </div>
+          <button class="button" type="button" data-audit data-i18n="stage.audit">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2M8 12h8" />
+            </svg>
+            Run the audit
+            <kbd>Alt+Shift+L</kbd>
+          </button>
         </div>
 
-        <div id="shop" class="shop">
-          <div class="shop-layout">
-            <header class="shop-header">
-              <div class="logo-slot">
-                <div class="logo-box"><a class="logo" href="#shop">Northwind</a></div>
-              </div>
-              <nav class="shop-nav" aria-label="Shop sections" data-i18n-attr="aria-label:nav.label">
-                <a href="#shop" data-i18n="nav.new">New in</a>
-                <a href="#shop" data-i18n="nav.lighting">Lighting</a>
-                <a href="#shop" data-i18n="nav.furniture">Furniture</a>
-                <a href="#shop" data-i18n="nav.sale">Sale</a>
-              </nav>
-              <div class="header-actions">
-                <div class="search-wrap">
-                  <input
-                    class="search"
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search the shop"
-                    data-i18n-attr="placeholder:search.placeholder;aria-label:search.label"
-                  />
+        <div class="window">
+          <div class="window-bar" aria-hidden="true">
+            <span class="window-dots"></span>
+            <span class="window-address">northwind.example</span>
+          </div>
+          <div id="shop" class="shop">
+            <div class="shop-layout">
+              <header class="shop-header">
+                <div class="logo-slot">
+                  <div class="logo-box"><a class="logo" href="#shop">Northwind</a></div>
                 </div>
-                <div class="cart-slot">
-                  <div class="cart-inner"><button class="cart" type="button" data-i18n="cart">Cart · 2</button></div>
-                </div>
-              </div>
-            </header>
-
-            <div class="shop-body">
-              <aside class="filters" aria-label="Filters" data-i18n-attr="aria-label:filters.label">
-                <div class="filter-group">
-                  <div class="filter-title-wrap"><h3 class="filter-title" data-i18n="filter.category">Category</h3></div>
-                  <ul class="filter-list">
-                    <li><label data-i18n="filter.lamps"><input type="checkbox" checked /> Lamps</label></li>
-                    <li><label data-i18n="filter.chairs"><input type="checkbox" /> Chairs</label></li>
-                    <li><label data-i18n="filter.tables"><input type="checkbox" /> Tables</label></li>
-                  </ul>
-                </div>
-                <div class="filter-group">
-                  <div class="filter-title-wrap"><h3 class="filter-title" data-i18n="filter.price">Price</h3></div>
-                  <ul class="filter-list">
-                    <li><label data-i18n="filter.under"><input type="checkbox" /> Under $50</label></li>
-                    <li><label data-i18n="filter.between"><input type="checkbox" /> $50 to $150</label></li>
-                  </ul>
-                </div>
-                <div class="muted"><p class="filter-note" data-i18n="filter.note">Prices include VAT.</p></div>
-              </aside>
-
-              <div class="products">
-                <div class="products-head">
-                  <div class="count-wrap"><p class="count" data-i18n="count">6 products</p></div>
-                  <div class="sort-wrap">
-                    <select class="sort" aria-label="Sort products" data-i18n-attr="aria-label:sort.label">
-                      <option data-i18n="sort.popular">Popular</option>
-                      <option data-i18n="sort.newest">Newest</option>
-                    </select>
+                <nav class="shop-nav" aria-label="Shop sections" data-i18n-attr="aria-label:nav.label">
+                  <a href="#shop" data-i18n="nav.new">New in</a>
+                  <a href="#shop" data-i18n="nav.lighting">Lighting</a>
+                  <a href="#shop" data-i18n="nav.furniture">Furniture</a>
+                  <a href="#shop" data-i18n="nav.sale">Sale</a>
+                </nav>
+                <div class="header-actions">
+                  <div class="search-wrap">
+                    <input
+                      class="search"
+                      type="search"
+                      placeholder="Search"
+                      aria-label="Search the shop"
+                      data-i18n-attr="placeholder:search.placeholder;aria-label:search.label"
+                    />
+                  </div>
+                  <div class="cart-slot">
+                    <div class="cart-inner"><button class="cart" type="button" data-i18n="cart">Cart · 2</button></div>
                   </div>
                 </div>
+              </header>
 
-                <div class="product-grid" id="product-grid"></div>
+              <div class="shop-body">
+                <aside class="filters" aria-label="Filters" data-i18n-attr="aria-label:filters.label">
+                  <div class="filter-group">
+                    <div class="filter-title-wrap"><h3 class="filter-title" data-i18n="filter.category">Category</h3></div>
+                    <ul class="filter-list">
+                      <li><label data-i18n="filter.lamps"><input type="checkbox" checked /> Lamps</label></li>
+                      <li><label data-i18n="filter.chairs"><input type="checkbox" /> Chairs</label></li>
+                      <li><label data-i18n="filter.tables"><input type="checkbox" /> Tables</label></li>
+                    </ul>
+                  </div>
+                  <div class="filter-group">
+                    <div class="filter-title-wrap"><h3 class="filter-title" data-i18n="filter.price">Price</h3></div>
+                    <ul class="filter-list">
+                      <li><label data-i18n="filter.under"><input type="checkbox" /> Under $50</label></li>
+                      <li><label data-i18n="filter.between"><input type="checkbox" /> $50 to $150</label></li>
+                    </ul>
+                  </div>
+                  <div class="muted"><p class="filter-note" data-i18n="filter.note">Prices include VAT.</p></div>
+                </aside>
+
+                <div class="products">
+                  <div class="products-head">
+                    <div class="count-wrap"><p class="count" data-i18n="count">6 products</p></div>
+                    <div class="sort-wrap">
+                      <select class="sort" aria-label="Sort products" data-i18n-attr="aria-label:sort.label">
+                        <option data-i18n="sort.popular">Popular</option>
+                        <option data-i18n="sort.newest">Newest</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="product-grid" id="product-grid"></div>
+                </div>
               </div>
-            </div>
 
-            <footer class="shop-footer">
-              <div class="footer-inner"><p data-i18n="shop.footer">Free delivery on orders over $50.</p></div>
-              <div class="clearfix"></div>
-            </footer>
+              <footer class="shop-footer">
+                <div class="footer-inner"><p data-i18n="shop.footer">Free delivery on orders over $50.</p></div>
+                <div class="clearfix"></div>
+              </footer>
+            </div>
           </div>
         </div>
       </section>
@@ -118,65 +176,144 @@
       <section class="rules" aria-labelledby="rules-title">
         <h2 id="rules-title" data-i18n="rules.title">How it decides</h2>
         <p class="section-lede" data-i18n="rules.lede">An element is only reported when all of these hold. Anything in doubt stays.</p>
-        <div class="rule-grid">
-          <article class="rule">
+        <ol class="rule-grid">
+          <li class="rule">
             <h3 data-i18n="rule1.title">It draws nothing</h3>
             <p data-i18n-html="rule1.text">No background, border, shadow, outline or <code>::before</code>, no effect such as clipping, positioning or a transform.</p>
-          </article>
-          <article class="rule">
+          </li>
+          <li class="rule">
             <h3 data-i18n="rule2.title">It styles nothing inside it</h3>
             <p data-i18n-html="rule2.text">No colour or font for its children, no custom properties, no <code>.card &gt; .title</code> rule that goes through it.</p>
-          </article>
-          <article class="rule">
+          </li>
+          <li class="rule">
             <h3 data-i18n="rule3.title">Nothing moves without it</h3>
             <p data-i18n-html="rule3.text">Its box is taken away for a moment and everything around it is measured again. Half a pixel of difference is enough to keep it.</p>
-          </article>
-          <article class="rule">
+          </li>
+          <li class="rule">
             <h3 data-i18n="rule4.title">Nothing else needs it</h3>
             <p data-i18n-html="rule4.text">No role, aria, handler or ref, no <code>:hover</code>, dark mode or <code>@media</code> styles. Ids and test ids are flagged to check.</p>
-          </article>
-        </div>
+          </li>
+        </ol>
       </section>
 
       <section class="usage" aria-labelledby="usage-title">
         <h2 id="usage-title" data-i18n="usage.title">Use it on any project</h2>
+        <p class="section-lede" data-i18n="usage.lede">Three ways to run it, with the same checks behind each.</p>
         <div class="usage-grid">
           <article class="usage-card">
+            <p class="usage-kicker" data-i18n="usage1.kicker">Vite plugin</p>
             <h3 data-i18n="usage1.title">In your app, while you develop</h3>
-            <p data-i18n-html="usage1.text">One line in your Vite config, then press <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd> on any page. Builds don't include it.</p>
-            <pre><code>// vite.config.js
-import { layerLensAudit } from 'layer-lens-audit/vite';
+            <p class="usage-text" data-i18n-html="usage1.text">One line in your Vite config, then press <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd> on any page.</p>
+            <div class="panel">
+              <div class="panel-bar">
+                <span class="panel-title">
+                  <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+                    <path d="M14 3v5h5" />
+                  </svg>
+                  vite.config.js
+                </span>
+                <button class="panel-copy" type="button" data-copy="#vite-snippet" data-i18n="copy">
+                  <svg class="icon icon-copy" viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="9" y="9" width="12" height="12" rx="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                  </svg>
+                  <svg class="icon icon-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="panel-code"><code id="vite-snippet"><span class="tok-key">import</span> { layerLensAudit }
+  <span class="tok-key">from</span> <span class="tok-str">'layer-lens-audit/vite'</span>;
 
-export default { plugins: [layerLensAudit()] };</code></pre>
-          </article>
-          <article class="usage-card">
-            <h3 data-i18n="usage2.title">On any page, without installing</h3>
-            <p data-i18n="usage2.text">Drag this to your bookmarks bar, then click it on a page you want to audit.</p>
-            <p>
-              <a
-                class="bookmarklet"
-                href="javascript:(()=>{if(window.LayerLensAudit)return LayerLensAudit.inspect();const s=document.createElement('script');s.src='https://unpkg.com/layer-lens-audit';s.onload=()=>LayerLensAudit.inspect();document.head.append(s)})()"
-                >layer-lens-audit</a
-              >
+<span class="tok-key">export default</span> {
+  plugins: [layerLensAudit()]
+};</code></pre>
+            </div>
+            <p class="usage-note" data-i18n="usage1.note">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="m8.5 12 2.5 2.5 4.5-5" /></svg>
+              Runs on the dev server only. Builds don't include it.
             </p>
-            <p class="small" data-i18n="usage2.small">Sites with a strict Content Security Policy block it.</p>
           </article>
-          <article class="usage-card">
-            <h3 data-i18n="usage3.title">On the command line and in CI</h3>
-            <p data-i18n="usage3.text">Measures the page on a phone and a desktop, and fails the build when new wrappers pile up.</p>
-            <pre><code>npm install -D layer-lens-audit
 
-npx layer-lens-audit http://localhost:4173 \
-  --baseline layer-lens-audit.json --max 0</code></pre>
+          <article class="usage-card">
+            <p class="usage-kicker" data-i18n="usage2.kicker">Bookmarklet</p>
+            <h3 data-i18n="usage2.title">On any page, without installing</h3>
+            <p class="usage-text" data-i18n="usage2.text">Drag the button to your bookmarks bar, then click it on any page you want to audit.</p>
+            <div class="panel panel-browser">
+              <div class="panel-bar" aria-hidden="true">
+                <span class="browser-dots"></span>
+                <span class="browser-address">example.com</span>
+              </div>
+              <div class="bookmarks">
+                <a
+                  class="bookmarklet"
+                  href="javascript:(()=>{if(window.LayerLensAudit)return LayerLensAudit.inspect();const s=document.createElement('script');s.src='https://unpkg.com/layer-lens-audit';s.onload=()=>LayerLensAudit.inspect();document.head.append(s)})()"
+                  title="Drag to your bookmarks bar"
+                  data-i18n-attr="title:usage2.drag"
+                  ><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 4.5-9 4.5-9-4.5z" /><path d="m3 12 9 4.5 9-4.5" /><path d="m3 16.5 9 4.5 9-4.5" /></svg>layer-lens-audit</a
+                >
+              </div>
+              <div class="browser-page" aria-hidden="true"></div>
+            </div>
+            <p class="usage-note" data-i18n="usage2.note">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 16v-4M12 8h.01" /></svg>
+              Sites with a strict Content Security Policy block it.
+            </p>
+          </article>
+
+          <article class="usage-card">
+            <p class="usage-kicker" data-i18n="usage3.kicker">CLI</p>
+            <h3 data-i18n="usage3.title">On the command line and in CI</h3>
+            <p class="usage-text" data-i18n="usage3.text">Measures the page on a phone and a desktop, and fails the build when new wrappers pile up.</p>
+            <div class="panel">
+              <div class="panel-bar">
+                <span class="panel-title">
+                  <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 7 5 5-5 5M12 19h7" /></svg>
+                  Terminal
+                </span>
+                <button class="panel-copy" type="button" data-copy="#cli-snippet" data-i18n="copy">
+                  <svg class="icon icon-copy" viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="9" y="9" width="12" height="12" rx="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                  </svg>
+                  <svg class="icon icon-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="panel-code"><code id="cli-snippet"><span class="cmd">npm install -D layer-lens-audit</span>
+
+<span class="cmd">npx layer-lens-audit \</span>
+  http://localhost:4173 \
+  --baseline layer-lens-audit.json \
+  --max 0</code></pre>
+            </div>
+            <p class="usage-note" data-i18n="usage3.note">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="m8.5 12 2.5 2.5 4.5-5" /></svg>
+              Reports as text, Markdown or JSON.
+            </p>
           </article>
         </div>
       </section>
     </main>
 
-    <footer class="footer">
-      <a href="https://github.com/hayrullah-zafer-yilmaz/layer-lens-audit">GitHub</a>
-      <span data-i18n="footer.license">MIT licensed</span>
+    <footer class="site-footer">
+      <p class="footer-brand">
+        <svg class="brand-mark icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m12 3 9 4.5-9 4.5-9-4.5z" />
+          <path d="m3 12 9 4.5 9-4.5" />
+          <path d="m3 16.5 9 4.5 9-4.5" />
+        </svg>
+        layer-lens-audit
+        <small data-i18n="footer.license">MIT licensed</small>
+      </p>
+      <p class="footer-links">
+        <a href="https://github.com/hayrullah-zafer-yilmaz/layer-lens-audit">GitHub</a>
+        <a href="https://www.npmjs.com/package/layer-lens-audit">npm</a>
+        <a href="https://github.com/hayrullah-zafer-yilmaz/layer-lens-audit/blob/main/CHANGELOG.md" data-i18n="footer.changelog">Changelog</a>
+      </p>
     </footer>
+
+    <p class="sr-only" id="copy-status" role="status"></p>
 
     <template id="product">
       <div class="product-cell">
